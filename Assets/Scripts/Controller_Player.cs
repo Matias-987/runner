@@ -8,10 +8,14 @@ public class Controller_Player : MonoBehaviour
     private int i = 0;
     private bool floored;
 
+    private Parallax parallax;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         initialSize = rb.transform.localScale.y;
+
+        parallax = FindObjectOfType<Parallax>(); // Referencia del script parallax.
     }
 
     void Update()
@@ -72,6 +76,7 @@ public class Controller_Player : MonoBehaviour
         {
             Destroy(this.gameObject);
             Controller_Hud.gameOver = true;
+            parallax.SetGameOver(true);
         }
 
         if (collision.gameObject.CompareTag("Floor"))

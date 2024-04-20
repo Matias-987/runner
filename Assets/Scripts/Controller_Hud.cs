@@ -6,13 +6,13 @@ public class Controller_Hud : MonoBehaviour
     public static bool gameOver = false;
     public Text distanceText;
     public Text gameOverText;
-    private float distance = 0;
+    private int distance = 0;
 
     void Start()
     {
         gameOver = false;
         distance = 0;
-        distanceText.text = distance.ToString();
+        UpdateDistanceText(); // Llama a la nueva funcion.
         gameOverText.gameObject.SetActive(false);
     }
 
@@ -26,8 +26,13 @@ public class Controller_Hud : MonoBehaviour
         }
         else
         {
-            distance += Time.deltaTime;
-            distanceText.text = distance.ToString();
+            distance += Mathf.FloorToInt(Time.deltaTime);
+            UpdateDistanceText();
         }
+    }
+
+    private void UpdateDistanceText()   // Actualiza el texto de la distancia.
+    {
+        distanceText.text = distance.ToString();  // Convierte la distancia en string.
     }
 }
