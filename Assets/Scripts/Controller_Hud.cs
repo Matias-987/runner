@@ -27,6 +27,7 @@ public class Controller_Hud : MonoBehaviour
         else
         {
             distance += Mathf.FloorToInt(Time.deltaTime);
+            distance++;
             UpdateDistanceText();
         }
     }

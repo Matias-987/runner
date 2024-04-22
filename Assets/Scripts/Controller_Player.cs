@@ -8,6 +8,8 @@ public class Controller_Player : MonoBehaviour
     private int i = 0;
     private bool floored;
 
+    public float rapidezDesplazamiento = 10.0f;
+
     private Parallax parallax;
 
     private void Start()
@@ -15,12 +17,19 @@ public class Controller_Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         initialSize = rb.transform.localScale.y;
 
-        parallax = FindObjectOfType<Parallax>(); // Referencia del script parallax.
+        parallax = FindObjectOfType<Parallax>(); // Referencia del parallax.
     }
 
     void Update()
     {
         GetInput();
+    }
+
+    private void VelocidadJugador()
+    {
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
+        rb.velocity = movement * rapidezDesplazamiento;
     }
 
     private void GetInput()
@@ -90,6 +99,23 @@ public class Controller_Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             floored = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("buff"))
+        {
+            Debug.Log("Buff");
+            if (other.name == "Slow")
+            {
+                Slow slowItem = other.GetComponent<Slow>();
+                if (slowItem != null)
+                {
+                    slowItem.UsarItem(gameObject);
+                    Debug.Log("Buffado");
+                }
+            }
         }
     }
 }
