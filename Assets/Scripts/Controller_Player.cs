@@ -7,6 +7,8 @@ public class Controller_Player : MonoBehaviour
     private float initialSize;
     private int i = 0;
     private bool floored;
+    private bool isJumping = false;
+    private bool isDucking = false;
 
     public float rapidezDesplazamiento = 10.0f;
 
@@ -45,6 +47,7 @@ public class Controller_Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.W))
             {
                 rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+                isJumping = true;
             }
         }
     }
@@ -59,6 +62,7 @@ public class Controller_Player : MonoBehaviour
                 {
                     rb.transform.localScale = new Vector3(rb.transform.localScale.x, rb.transform.localScale.y / 2, rb.transform.localScale.z);
                     i++;
+                    isDucking = true;
                 }
             }
             else
@@ -67,6 +71,7 @@ public class Controller_Player : MonoBehaviour
                 {
                     rb.transform.localScale = new Vector3(rb.transform.localScale.x, initialSize, rb.transform.localScale.z);
                     i = 0;
+                    isDucking = false;
                 }
             }
         }
@@ -91,6 +96,7 @@ public class Controller_Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             floored = true;
+            isJumping = false;
         }
     }
 
@@ -117,5 +123,20 @@ public class Controller_Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool IsJumping()
+    {
+        return isJumping;
+    }
+
+    public bool IsDucking()
+    {
+        return isDucking;
+    }
+
+    public bool Floored()
+    {
+        return floored;
     }
 }

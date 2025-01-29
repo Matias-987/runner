@@ -410,8 +410,9 @@ MonoBehaviour:
   - {fileID: 4641428172921375839, guid: ad4857fb319b5014696c8c201b507222, type: 3}
   - {fileID: 4362255490418720725, guid: 10839c286a1f27947bc1fa05aee0bfdb, type: 3}
   - {fileID: 9145002132079440597, guid: 0e6260b13f6e84c47b94dd28da588bcd, type: 3}
-  buffs:
-  - {fileID: 7600652542417401718, guid: 21c6c90ad77637f40a2050a48fdc6bee, type: 3}
+  - {fileID: 9145002132079440597, guid: 8663e085adcff784cab8b76f14d0fb60, type: 3}
+  - {fileID: 9145002132079440597, guid: b52299bacb3b7b9438ac81f5ec545503, type: 3}
+  buffs: []
   instantiatePos: {fileID: 432534838}
   respawningTimer: 0
 --- !u!4 &432534840
@@ -1173,7 +1174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 10
-  rapidezDesplazamiento: 10
+  rapidezDesplazamiento: 1
 --- !u!54 &1018040025
 Rigidbody:
   m_ObjectHideFlags: 0

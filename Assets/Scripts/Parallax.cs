@@ -14,6 +14,7 @@ public class Parallax : MonoBehaviour
 
     void Update()
     {
+        // Verifica si el juego no termino
         if (!Controller_Hud.gameOver)
         {
             transform.position = new Vector3(transform.position.x - parallaxEffect, transform.position.y, transform.position.z);
@@ -22,5 +23,11 @@ public class Parallax : MonoBehaviour
                 transform.localPosition = new Vector3(20, transform.localPosition.y, transform.localPosition.z);
             }
         }
+    }
+
+    // Metodo para detener el parallax cuando el juego termina
+    public void SetGameOver(bool isGameOver)
+    {
+        Debug.Log("Parallax detenido: " + isGameOver);
     }
 }
