@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller_Instantiator : MonoBehaviour
 {
     public List<GameObject> enemies;
+    public List<GameObject> buffs;
     public GameObject instantiatePos;
     public float respawningTimer;
     private float time = 0;
@@ -11,11 +13,13 @@ public class Controller_Instantiator : MonoBehaviour
     void Start()
     {
         Controller_Enemy.enemyVelocity = 2;
+        Buffs.buffVelocity = 2;
     }
 
     void Update()
     {
         SpawnEnemies();
+        SpawnBuffs();
         ChangeVelocity();
     }
 
@@ -31,8 +35,19 @@ public class Controller_Instantiator : MonoBehaviour
 
         if (respawningTimer <= 0)
         {
-            Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], instantiatePos.transform);
-            respawningTimer = UnityEngine.Random.Range(2, 6);
+            Instantiate(enemies[Random.Range(0, enemies.Count)], instantiatePos.transform);
+            respawningTimer = Random.Range(2, 6);
+        }
+    }
+
+    private void SpawnBuffs()
+    {
+        respawningTimer -= Time.deltaTime;
+        if (respawningTimer <= 0)
+        {
+            Instantiate(buffs[Random.Range(0, buffs.Count)], instantiatePos.transform);
+            respawningTimer = Random.Range(2, 6);
         }
     }
 }
+
