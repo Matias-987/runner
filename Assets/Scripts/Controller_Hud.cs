@@ -21,13 +21,13 @@ public class Controller_Hud : MonoBehaviour
         if (gameOver)
         {
             Time.timeScale = 0;
-            gameOverText.text = "Game Over \n Total Distance: " + distance.ToString();
+            gameOverText.text = "Game Over \n Total Distance: " + Mathf.Round(distance).ToString();
             gameOverText.gameObject.SetActive(true);
         }
         else
         {
             distance += Time.deltaTime;
-            distanceText.text = distance.ToString();
+            distanceText.text = Mathf.Round(distance).ToString();
         }
     }
 }
