@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Buffs : MonoBehaviour
+public class Controller_Buff : MonoBehaviour
 {
     public static float buffVelocity;
     private Rigidbody rb;
-
-    protected virtual void Start()
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
@@ -20,10 +19,9 @@ public class Buffs : MonoBehaviour
 
     public void OutOfBounds()
     {
-        if (transform.position.x <= -15)
+        if (this.transform.position.x <= -15)
         {
             Destroy(this.gameObject);
         }
     }
 }
-

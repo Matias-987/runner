@@ -6,15 +6,28 @@ public class ActionEnemy : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        HandleCollision(other); // Detecta cuando el jugaor entra al trigger
+    }
+
+    private void OnTriggerStay(Collider other)
+    { 
+        HandleCollision(other); // Detecta cuando el jugador esta dentro del trigger
+    }
+    private void HandleCollision(Collider other)
+    {
+        if (other.CompareTag("Player")) // Verifica si el jugador colisiona con el enemigo
         {
             Controller_Player player = other.GetComponent<Controller_Player>();
 
-            // Verifica si el ugor salta o se agacha
-            if (player.IsJumping() || player.IsDucking())
+            if (player != null)
             {
-                Destroy(player.gameObject);
-                Controller_Hud.gameOver = true;
+                // Verifica si el jugador esta saltando o agachandose
+                if (player.IsJumping() || player.IsDucking())
+                {
+                    // El jugador pierde
+                    Destroy(player.gameObject);
+                    Controller_Hud.gameOver = true;
+                }
             }
         }
     }

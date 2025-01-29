@@ -161,4 +161,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zigzagSpeed: 3
   zigzagAmplitude: 3
-  initialY: 0
+  initialY: 0.5

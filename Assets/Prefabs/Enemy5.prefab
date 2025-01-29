@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9145002132079440595}
   - component: {fileID: 9145002132079440594}
   - component: {fileID: -5287314150538996035}
-  - component: {fileID: -6706793864183637880}
+  - component: {fileID: 8812883590459298169}
   m_Layer: 0
   m_Name: Enemy5
   m_TagString: Enemy
@@ -102,7 +102,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -147,7 +147,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
---- !u!114 &-6706793864183637880
+--- !u!114 &8812883590459298169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,9 +156,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9145002132079440597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3782a1dc7a9d3f4586991e554e58077, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e6fe2777307c4249af99415a54f50f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zigzagSpeed: 3
-  zigzagAmplitude: 3
-  initialY: 0

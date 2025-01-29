@@ -412,9 +412,11 @@ MonoBehaviour:
   - {fileID: 9145002132079440597, guid: 0e6260b13f6e84c47b94dd28da588bcd, type: 3}
   - {fileID: 9145002132079440597, guid: 8663e085adcff784cab8b76f14d0fb60, type: 3}
   - {fileID: 9145002132079440597, guid: b52299bacb3b7b9438ac81f5ec545503, type: 3}
-  buffs: []
+  buffs:
+  - {fileID: 6449469078991816959, guid: 62c3c133b51c6504eb151c17995410ca, type: 3}
   instantiatePos: {fileID: 432534838}
-  respawningTimer: 0
+  enemyRespawnTimer: 0
+  buffRespawnTimer: 0
 --- !u!4 &432534840
 Transform:
   m_ObjectHideFlags: 0
@@ -1156,7 +1158,7 @@ GameObject:
   - component: {fileID: 1018040024}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

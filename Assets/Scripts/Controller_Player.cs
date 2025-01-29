@@ -9,6 +9,8 @@ public class Controller_Player : MonoBehaviour
     private bool floored;
     private bool isJumping = false;
     private bool isDucking = false;
+    private bool isImmune = false;
+    private float immunityEndTime;
 
     public float rapidezDesplazamiento = 10.0f;
 
@@ -25,6 +27,13 @@ public class Controller_Player : MonoBehaviour
     void Update()
     {
         GetInput();
+
+        // Verifica si la inmunidad termino
+        if (isImmune && Time.time > immunityEndTime)
+        {
+            isImmune = false;
+            Debug.Log("Inmunidad desactivada.");
+        }
     }
 
     private void VelocidadJugador()
@@ -65,6 +74,7 @@ public class Controller_Player : MonoBehaviour
                     isDucking = true;
                 }
             }
+
             else
             {
                 if (rb.transform.localScale.y != initialSize)
@@ -75,6 +85,7 @@ public class Controller_Player : MonoBehaviour
                 }
             }
         }
+
         else
         {
             if (Input.GetKeyDown(KeyCode.S))
@@ -86,7 +97,7 @@ public class Controller_Player : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && !isImmune) // Verifica que el jugador no sea inmune
         {
             Destroy(this.gameObject);
             Controller_Hud.gameOver = true;
@@ -108,23 +119,13 @@ public class Controller_Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    // Metodo para activar la inmunidad
+    public void ActivateImmunity(float duration)
     {
-        if (other.gameObject.CompareTag("buff"))
-        {
-            Debug.Log("Buff");
-            if (other.name == "Slow")
-            {
-                Slow slowItem = other.GetComponent<Slow>();
-                if (slowItem != null)
-                {
-                    slowItem.UsarItem(gameObject);
-                    Debug.Log("Buffado");
-                }
-            }
-        }
+        isImmune = true;
+        immunityEndTime = Time.time + duration; // Establece el tiempo de finalizacion
+        Debug.Log("Inmunidad activada por " + duration + " segundos.");
     }
-
     public bool IsJumping()
     {
         return isJumping;
@@ -133,10 +134,5 @@ public class Controller_Player : MonoBehaviour
     public bool IsDucking()
     {
         return isDucking;
-    }
-
-    public bool Floored()
-    {
-        return floored;
     }
 }
