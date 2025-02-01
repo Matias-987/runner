@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEditor.UIElements;
+using UnityEngine;
 
 public class Controller_Player : MonoBehaviour
 {
@@ -10,7 +12,6 @@ public class Controller_Player : MonoBehaviour
     private bool isJumping = false;
     private bool isDucking = false;
     private bool isImmune = false;
-    private float immunityEndTime;
 
     public float rapidezDesplazamiento = 10.0f;
 
@@ -21,19 +22,12 @@ public class Controller_Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         initialSize = rb.transform.localScale.y;
 
-        parallax = FindObjectOfType<Parallax>(); // Referencia del parallax.
+        parallax = FindObjectOfType<Parallax>(); // Referencia del parallax
     }
 
     void Update()
     {
         GetInput();
-
-        // Verifica si la inmunidad termino
-        if (isImmune && Time.time > immunityEndTime)
-        {
-            isImmune = false;
-            Debug.Log("Inmunidad desactivada.");
-        }
     }
 
     private void VelocidadJugador()
@@ -97,11 +91,13 @@ public class Controller_Player : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && !isImmune) // Verifica que el jugador no sea inmune
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(this.gameObject);
-            Controller_Hud.gameOver = true;
-            parallax.SetGameOver(true);
+            if (!isImmune)
+            {
+                Destroy(gameObject);
+                Controller_Hud.gameOver = true;
+            }
         }
 
         if (collision.gameObject.CompareTag("Floor"))
@@ -119,12 +115,24 @@ public class Controller_Player : MonoBehaviour
         }
     }
 
-    // Metodo para activar la inmunidad
-    public void ActivateImmunity(float duration)
+    public void OnTriggerEnter(Collider other)
     {
-        isImmune = true;
-        immunityEndTime = Time.time + duration; // Establece el tiempo de finalizacion
-        Debug.Log("Inmunidad activada por " + duration + " segundos.");
+        if (other.gameObject.CompareTag("buff"))
+        {
+            PowerUp_Inmunity buff = other.gameObject.GetComponent<PowerUp_Inmunity>();
+            if (buff != null)
+            {
+                StartCoroutine(buff.ActivateImmunity());
+                isImmune = true;
+                StartCoroutine(ResetImmunity(buff.immunityDuration));
+            }
+        }
+    }
+
+    private IEnumerator ResetImmunity(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isImmune = false;
     }
     public bool IsJumping()
     {

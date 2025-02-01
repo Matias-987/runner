@@ -9,7 +9,6 @@ public class Parallax : MonoBehaviour
     void Start()
     {
         startPos = transform.position.x;
-        length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
     void Update()
@@ -23,11 +22,5 @@ public class Parallax : MonoBehaviour
                 transform.localPosition = new Vector3(20, transform.localPosition.y, transform.localPosition.z);
             }
         }
-    }
-
-    // Metodo para detener el parallax cuando el juego termina
-    public void SetGameOver(bool isGameOver)
-    {
-        Debug.Log("Parallax detenido: " + isGameOver);
     }
 }

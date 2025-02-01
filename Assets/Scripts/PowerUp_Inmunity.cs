@@ -1,22 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class PowerUp_Inmunity : MonoBehaviour
 {
     public float immunityDuration = 5f;
+    private GameObject player;
 
-    private void OnTriggerEnter(Collider other)
+    void Start()
     {
-        if (other.CompareTag("Player"))
-        {
-            Controller_Player player = other.GetComponent<Controller_Player>();
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
-            if (player != null)
-            {
-                player.ActivateImmunity(immunityDuration);
-                Destroy(gameObject);
-            }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine(ActivateImmunity()); // Inicia la inmunidad
+            GetComponent<Collider>().enabled = false; // Desactiva el collider para evitar multiples activaciones
+            GetComponent<Renderer>().enabled = false; // Hace invisible el buff (opcional)
+            Destroy(gameObject, immunityDuration); // Destruye el buff despues de la inmunidad
         }
+    }
+
+    public IEnumerator ActivateImmunity()
+    {
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        SetEnemyCollisions(enemyLayer, ignore: true);
+
+        yield return new WaitForSeconds(immunityDuration);
+
+        SetEnemyCollisions(enemyLayer, ignore: false);
+        Debug.Log("Inmunidad desactivada");
+    }
+
+    private void SetEnemyCollisions(int enemyLayer, bool ignore)
+    {
+        int playerLayer = LayerMask.NameToLayer("Player");
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, ignore);
     }
 }

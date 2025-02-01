@@ -44,10 +44,11 @@ public class Controller_Instantiator : MonoBehaviour
     private void SpawnBuffs()
     {
         buffRespawnTimer -= Time.deltaTime;
+
         if (buffRespawnTimer <= 0)
         {
             Instantiate(buffs[Random.Range(0, buffs.Count)], instantiatePos.transform);
-            buffRespawnTimer = Random.Range(10, 20);
+            buffRespawnTimer = Random.Range(11, 21);
         }
     }
 }

@@ -34,7 +34,7 @@ public class ZigzagEnemy : MonoBehaviour
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
         if (CompareTag("Floor"))
         {
