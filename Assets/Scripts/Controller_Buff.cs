@@ -4,6 +4,7 @@ public class Controller_Buff : MonoBehaviour
 {
     public static float buffVelocity;
     private Rigidbody rb;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -15,6 +16,7 @@ public class Controller_Buff : MonoBehaviour
         OutOfBounds();
     }
 
+    // Destruye el game object cuando esta fuera del limite de la camara
     public void OutOfBounds()
     {
         if (this.transform.position.x <= -15)

@@ -13,7 +13,7 @@ public class Controller_Instantiator : MonoBehaviour
 
     void Start()
     {
-        Controller_Enemy.enemyVelocity = 2;
+        Controller_Enemy.enemyVelocity = 2;  // Velocidad inicial de los enemigos
     }
 
     void Update()
@@ -23,6 +23,7 @@ public class Controller_Instantiator : MonoBehaviour
         ChangeVelocity();
     }
 
+    // Logica de velocidad
     private void ChangeVelocity()
     {
         time += Time.deltaTime;
@@ -32,23 +33,23 @@ public class Controller_Instantiator : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        enemyRespawnTimer -= Time.deltaTime;
+        enemyRespawnTimer -= Time.deltaTime;  // Temporizador de spawn
 
         if (enemyRespawnTimer <= 0)
         {
-            Instantiate(enemies[Random.Range(0, enemies.Count)], instantiatePos.transform);
-            enemyRespawnTimer = Random.Range(2, 6);
+            Instantiate(enemies[Random.Range(0, enemies.Count)], instantiatePos.transform);  // Elige un enemigo aleatorio de la lista y lo spawnea
+            enemyRespawnTimer = Random.Range(2, 6);  // Rango de tiempo en el que spawnea
         }
     }
 
     private void SpawnBuffs()
     {
-        buffRespawnTimer -= Time.deltaTime;
+        buffRespawnTimer -= Time.deltaTime;  // Temporizador de spawn
 
         if (buffRespawnTimer <= 0)
         {
-            Instantiate(buffs[Random.Range(0, buffs.Count)], instantiatePos.transform);
-            buffRespawnTimer = Random.Range(11, 21);
+            Instantiate(buffs[Random.Range(0, buffs.Count)], instantiatePos.transform);  // Elige un buff aleatorio e la lista y lo spawnea
+            buffRespawnTimer = Random.Range(11, 21);  // Rango de tiempo en el que spawnea
         }
     }
 }

@@ -13,9 +13,9 @@ public class PowerUp_Inmunity : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             StartCoroutine(ActivateImmunity()); // Inicia la inmunidad
             GetComponent<Collider>().enabled = false; // Desactiva el collider para evitar multiples activaciones
@@ -24,6 +24,7 @@ public class PowerUp_Inmunity : MonoBehaviour
         }
     }
 
+    // Logica de la inmunidad
     public IEnumerator ActivateImmunity()
     {
         int playerLayer = LayerMask.NameToLayer("Player");
@@ -33,9 +34,9 @@ public class PowerUp_Inmunity : MonoBehaviour
         yield return new WaitForSeconds(immunityDuration);
 
         SetEnemyCollisions(enemyLayer, ignore: false);
-        Debug.Log("Inmunidad desactivada");
     }
 
+    // Logica para ignorar las colisiones con los enemigos
     private void SetEnemyCollisions(int enemyLayer, bool ignore)
     {
         int playerLayer = LayerMask.NameToLayer("Player");

@@ -16,6 +16,7 @@ public class Controller_Enemy : MonoBehaviour
         OutOfBounds();
     }
 
+    // Destruye el game obect cuando esta afuera del limite de la camara
     public void OutOfBounds()
     {
         if (this.transform.position.x <= -15)

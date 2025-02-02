@@ -4,30 +4,28 @@ using UnityEngine;
 
 public class Controller_Player : MonoBehaviour
 {
-    private Rigidbody rb;
+    private Rigidbody rb;  // Rigidbody del jugador
     public float jumpForce = 10;
-    private float initialSize;
-    private int i = 0;
-    private bool floored;
-    private bool isJumping = false;
-    private bool isDucking = false;
-    private bool isImmune = false;
-
+    private float initialSize;  // Escala inicial en el eje Y
+    private int i = 0;  // Contador para el estado de agachado
+    private bool floored;  // Indica si el jugador esta en el suelo
+    private bool isJumping = false;  // Indica si el jugador esta saltando
+    private bool isDucking = false;  // Indica si el jugador esta agachado
+    private bool isImmune = false;  // Indica si el jugador es invulnerable
     public float rapidezDesplazamiento = 10.0f;
-
     private Parallax parallax;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        initialSize = rb.transform.localScale.y;
+        initialSize = rb.transform.localScale.y;  // Guarda la escala inicial
 
         parallax = FindObjectOfType<Parallax>(); // Referencia del parallax
     }
 
     void Update()
     {
-        GetInput();
+        GetInput();  // Actualiza las entraas del jugador (W para saltar, S para agacharse)
     }
 
     private void VelocidadJugador()
@@ -43,7 +41,7 @@ public class Controller_Player : MonoBehaviour
         Duck();
     }
 
-    private void Jump()
+    private void Jump()  // Maneja la logica del salto
     {
         if (floored)
         {
@@ -55,7 +53,7 @@ public class Controller_Player : MonoBehaviour
         }
     }
 
-    private void Duck()
+    private void Duck()  // Maneja la logica para agacharse
     {
         if (floored)
         {
@@ -63,7 +61,8 @@ public class Controller_Player : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    rb.transform.localScale = new Vector3(rb.transform.localScale.x, rb.transform.localScale.y / 2, rb.transform.localScale.z);
+                    // Reduce la escala a la mitad en el eje Y
+                    rb.transform.localScale = new Vector3(rb.transform.localScale.x, rb.transform.localScale.y / 2, rb.transform.localScale.z); 
                     i++;
                     isDucking = true;
                 }
@@ -73,6 +72,7 @@ public class Controller_Player : MonoBehaviour
             {
                 if (rb.transform.localScale.y != initialSize)
                 {
+                    // Restaura la escala original
                     rb.transform.localScale = new Vector3(rb.transform.localScale.x, initialSize, rb.transform.localScale.z);
                     i = 0;
                     isDucking = false;
@@ -96,7 +96,7 @@ public class Controller_Player : MonoBehaviour
             if (!isImmune)
             {
                 Destroy(gameObject);
-                Controller_Hud.gameOver = true;
+                Controller_Hud.gameOver = true;  // Activa el game over
             }
         }
 
@@ -117,6 +117,7 @@ public class Controller_Player : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        // Llama a la logica del buff
         if (other.gameObject.CompareTag("buff"))
         {
             PowerUp_Inmunity buff = other.gameObject.GetComponent<PowerUp_Inmunity>();
@@ -131,9 +132,12 @@ public class Controller_Player : MonoBehaviour
 
     private IEnumerator ResetImmunity(float duration)
     {
+        duration = 5f;
         yield return new WaitForSeconds(duration);
         isImmune = false;
     }
+
+    // Metodos publicos para verificar el estado del jugador
     public bool IsJumping()
     {
         return isJumping;
